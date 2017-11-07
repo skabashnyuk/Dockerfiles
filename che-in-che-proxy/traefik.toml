@@ -103,12 +103,10 @@ address = ":8086"
              url = "http://che-host:8080"
 [frontends]
   [frontends.frontend2]
-    priority = 10
     backend = "backend2"
-    passHostHeader = true
-    rule = "Path:/api/*"
+    [frontends.frontend2.routes.api]
+    rule = "PathPrefix:/api/"
   [frontends.frontend1]
-    priority = 5
     backend = "backend1"
-    passHostHeader = true
-    rule = "Path:/*"
+    [frontends.frontend1.routes.ide]
+    rule = "PathPrefix: /"
