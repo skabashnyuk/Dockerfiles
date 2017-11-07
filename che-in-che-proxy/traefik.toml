@@ -22,7 +22,7 @@ debug = true
 # Optional
 # Default: ["http"]
 #
-# defaultEntryPoints = ["http", "https"]
+defaultEntryPoints = ["http"]
 
 # Entrypoints definition
 #
@@ -68,7 +68,7 @@ debug = true
 # Optional
 # Default: os.Stdout
 #
-# filePath = "/path/to/log/log.txt"
+ filePath = "/home/user/traefik/log.txt"
 
 # Format is either "json" or "common".
 #
@@ -90,3 +90,25 @@ debug = true
 #
 address = ":8086"
 
+
+
+[file]
+
+[backends]
+  [backends.backend1]
+      [backends.backend1.servers.server1]
+             url = "http://localhost:8080"
+  [backends.backend2]
+        [backends.backend2.servers.server1]
+             url = "http://che-host:8080"
+[frontends]
+  [frontends.frontend2]
+    priority = 10
+    backend = "backend2"
+    passHostHeader = true
+    rule = "Path:/api/*"
+  [frontends.frontend1]
+    priority = 5
+    backend = "backend1"
+    passHostHeader = true
+    rule = "Path:/*"
