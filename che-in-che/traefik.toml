@@ -104,9 +104,11 @@ address = ":8086"
 [frontends]
   [frontends.frontend2]
     backend = "backend2"
+    passHostHeader = true
     [frontends.frontend2.routes.api]
     rule = "PathPrefix:/api/"
   [frontends.frontend1]
     backend = "backend1"
+    passHostHeader = true
     [frontends.frontend1.routes.ide]
     rule = "PathPrefix: /"
