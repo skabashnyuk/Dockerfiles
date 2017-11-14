@@ -10,8 +10,8 @@ env:
   - secure: PsRv588ESpn2vCoPvpha5j51n713q+HqjGq6KVLNQaUMs5Q7xmfrWRRqYRU45rzxF1N+dCa/Dz7l5PHpUiGJiV8BpQ4MLhVpWbx4dD/8nKR3b/H2geMNJRDj9iuD4+nEi5+01KqCxpKWYu8kqb5lP2H9a/TKgyGuMuR6hvi0xy69fCNIBKEioAxz5qkwTm39Bl1jkcseZ8XYZAwQKZFX6vhFwPKGGt+bZ6nsicPRilcdWccNrZv+K64NCmj8SrUk/P+eXEMDDxqtMT3ZnJ9qrakPB34TrZ2/N1qL6RaisRpRBGvXm52J0TGIpY8UPn3tbX2+I2eFnr3V68KTJMvJfN8+C6ZyxfZ/zIL/bzthJtcCxSH4eNoqoFrnGu4/K/ZKZ2Evd+kU3wjA5J6s8a1HhlpznoLEfM1TYLy8/Vu/r1rwz95DyC4TKswTfJsBvR4MXCnNHNqDS+qIQh60GGdG+Ne1uU+Mm0AHeQuPomVzm5Yo2S4lNeqez2ssmH3npSiElsXrn2VYdEVbkuD7f/eTH93x/i37ZUMtVVrpfKTat1CHZ+V3vr/hwxQerMmefv7ZdLq3Qu7xe6fDJk8Nmly6t3/ItgRPN5Gz66zNXu00Vzj1nKi6PPOFkvV/GFqXEhGxfn26Q6niVDgEBarqtqcTMFIvqO30jRy+LfqUUVMJ/98=
 after_success:
 - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-- cd che-in-che-proxy
-- export REPO=ksmster/che-in-che-proxy
+- cd che-in-che
+- export REPO=ksmster/che-in-che
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
   ; fi`
 - docker build -f Dockerfile -t $REPO:$COMMIT .
