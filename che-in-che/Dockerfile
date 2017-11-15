@@ -9,5 +9,6 @@ RUN rm -rf /home/user/tomcat8 ;\
      wget -O  /home/user/tomcat8.zip "http://maven.codenvycorp.com/content/groups/public/org/eclipse/che/lib/che-tomcat8-slf4j-logback/6.0.0-M1/che-tomcat8-slf4j-logback-6.0.0-M1.zip" ;\
      unzip   /home/user/tomcat8.zip -d /home/user/tomcat8;\
      rm /home/user/tomcat8.zip;\
-     mkdir /home/user/tomcat8/webapps
+     mkdir /home/user/tomcat8/webapps;\
+     sed -i -- 's/autoDeploy=\"false\"/autoDeploy=\"true\"/g' /home/user/tomcat8/conf/server.xml
 
