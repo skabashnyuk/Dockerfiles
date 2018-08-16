@@ -15,6 +15,9 @@ if [ -n "${POSTGRESQL_LOG_DEBUG+set}" ]; then
 
     if [ ! -f /opt/app-root/src/postgresql-cfg/postgresql.log.debug.conf ]; then
         echo "postgresql.conf not found!"
+        ls -la  /opt/app-root/src/postgresql-cfg/
+        whoami
+        ps aux
         mv /opt/app-root/src/postgresql-cfg/postgresql.conf.debug /opt/app-root/src/postgresql-cfg/postgresql.log.debug.conf
      else
         echo OK
