@@ -1,7 +1,7 @@
 FROM alpine:3.8  as builder
 
 
-RUN PACKAGE="wget ca-certificates git bash xvfb x11vnc " && \
+RUN PACKAGE="wget ca-certificates git bash xvfb x11vnc supervisor gitx" && \
     apk update upgrade --no-cache && apk add --no-cache ${PACKAGE} && \
     # noVNC download
     git clone https://github.com/novnc/noVNC.git /opt/novnc \
@@ -11,7 +11,7 @@ COPY novnc-index.html /opt/novnc/index.html
 # Add VNC startup script
 COPY start-vnc-session.sh /usr/bin/
 RUN chmod +x /usr/bin/start-vnc-session.sh
-
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
 RUN adduser --disabled-password -S -u 1001 -G root -h ${HOME} -s /bin/sh user \

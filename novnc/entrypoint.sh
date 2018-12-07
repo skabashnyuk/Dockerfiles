@@ -10,10 +10,9 @@
 # Contributors:
 #   Red Hat, Inc. - initial API and implementation
 #
-echo 1
+
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
-echo 1
 if ! grep -Fq "${USER_ID}" /etc/passwd; then
     # current user is an arbitrary
     # user (its uid is not in the
@@ -29,7 +28,6 @@ if ! grep -Fq "${USER_ID}" /etc/passwd; then
     sed "s/\${HOME}/\/home\/theia/g" > /etc/group
 fi
 
-echo 1
 # Grant access to projects volume in case of non root user with sudo rights
 if [ "$(id -u)" -ne 0 ] && command -v sudo >/dev/null 2>&1 && sudo -n true > /dev/null 2>&1; then
     sudo chown ${USER_ID}:${GROUP_ID} /projects
@@ -54,19 +52,15 @@ trap 'responsible_shutdown' SIGHUP SIGTERM SIGINT
 
 cd ${HOME}
 
-echo 1
-#export DISPLAY=:0
-#/usr/bin/start-vnc-session.sh 0
-echo 3
-
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf &
 PID=$!
 
 # See: http://veithen.github.io/2014/11/16/sigterm-propagation.html
-#wait ${PID}
-#wait ${PID}
+wait ${PID}
+wait ${PID}
 EXIT_STATUS=$?
 
 # wait forever
-while true
-do
+#while true
+#do
   tail -f /dev/null & wait ${!}
