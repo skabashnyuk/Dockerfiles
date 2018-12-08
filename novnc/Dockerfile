@@ -1,7 +1,9 @@
 FROM alpine:3.8  as builder
 
+ENV HOME=/home/user
+WORKDIR ${HOME}
 
-RUN PACKAGE="wget ca-certificates git bash xvfb x11vnc supervisor gitx" && \
+RUN PACKAGE="wget ca-certificates git bash xvfb x11vnc supervisor wget curl" && \
     apk update upgrade --no-cache && apk add --no-cache ${PACKAGE} && \
     # noVNC download
     git clone https://github.com/novnc/noVNC.git /opt/novnc \
@@ -31,12 +33,9 @@ RUN adduser --disabled-password -S -u 1001 -G root -h ${HOME} -s /bin/sh user \
 
 
 USER user
-# This is a bit of a hack. At the moment we have no means of starting background
-# tasks from a Dockerfile. This workaround checks, on each bashrc eval, if the X
-# server is running on screen 0, and if not starts Xvfb, x11vnc and novnc.
-RUN echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh 0 &> /tmp/display-0.log)" >> ~/.bashrc
-RUN echo "export DISPLAY=:0" >> ~/.bashrc
 
+#https://az764295.vo.msecnd.net/stable/bc24f98b5f70467bc689abf41cc5550ca637088e/code-stable-1542309103.tar.g
 WORKDIR /projects
+
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
